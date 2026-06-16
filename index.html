@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLACE — Напольные покрытия премиум-класса</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #c47a44, #8b4c2c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .logo p {
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .nav {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #c47a44;
+        }
+
+        .actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            position: relative;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #c47a44;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 20px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: #c47a44;
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background: #a86232;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(196,122,68,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #c47a44;
+            color: #c47a44;
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .btn-outline:hover {
+            background: #c47a44;
+            color: white;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(135deg, #f5f2ef 0%, #e8e3df 100%);
+            padding: 80px 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            margin-bottom: 32px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c47a44;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Categories */
+        .categories {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 48px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background: #f8f6f4;
+            border-radius: 30px;
+            padding: 30px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: 0.3s;
+            display: block;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            background: white;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .category-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .category-price {
+            color: #c47a44;
+            font-weight: 600;
+        }
+
+        /* Products */
+        .hits {
+            background: #f8f6f4;
+            padding: 80px 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 260px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #dc2626;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #c47a44;
+            margin: 12px 0;
+        }
+
+        .product-price old {
+            font-size: 0.8rem;
+            color: #aaa;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .add-to-cart:hover {
+            background: #c47a44;
+        }
+
+        /* Calculator */
+        .calculator {
+            background: linear-gradient(135deg, #2c2522, #4a3b34);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .calculator-form input,
+        .calculator-form select {
+            width: 100%;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .calculator-result {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .result-price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #c47a44;
+            margin: 16px 0;
+        }
+
+        /* Gallery */
+        .gallery {
+            padding: 80px 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 24px;
+            overflow: hidden;
+            height: 260px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 0;
+            background: #f8f6f4;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .faq-question:hover {
+            background: #fef5ed;
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.3s;
+            color: #666;
+        }
+
+        .faq-item.open .faq-answer {
+            padding: 0 24px 20px;
+            max-height: 300px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: #999;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-text h2 {
+                font-size: 2rem;
+            }
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none;">
+                    <h1>PLACE</h1>
+                    <p>премиальные напольные покрытия</p>
+                </a>
+            </div>
+            <div class="nav">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="wishlist.html">Избранное</a>
+                <a href="comparison.html">Сравнение</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            <div class="actions">
+                <a href="wishlist.html" class="action-btn">❤️ <span class="badge" id="wishlistBadge">0</span></a>
+                <a href="comparison.html" class="action-btn">🔄 <span class="badge" id="compareBadge">0</span></a>
+                <a href="cart.html" class="action-btn">🛒 <span class="badge" id="cartBadge">0</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Напольные покрытия <br> для вашего дома</h2>
+                <p>Премиальные материалы от ведущих европейских производителей. Бесплатный замер и профессиональная укладка.</p>
+                <a href="catalog.html" class="btn-primary">Смотреть каталог →</a>
+                <div class="hero-stats">
+                    <div class="stat"><div class="stat-value">8+</div><div>лет на рынке</div></div>
+                    <div class="stat"><div class="stat-value">1500+</div><div>клиентов</div></div>
+                    <div class="stat"><div class="stat-value">50</div><div>лет гарантии</div></div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://cdn1.youla.io/files/images/720_720_out/67/eb/67ebbcdb64c9c4153c01fbfa-2.jpg" alt="Интерьер с ламинатом">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories (без смайликов) -->
+<section class="categories">
+    <div class="container">
+        <h2 class="section-title">Выбирайте по каталогу</h2>
+        <p class="section-subtitle">Более 500 коллекций в различных стилях</p>
+        <div class="categories-grid">
+            <a href="catalog.html?category=laminate" class="category-card">
+                <div class="category-title">Ламинат</div>
+                <div class="category-price">от 1 490 ₽/м²</div>
+            </a>
+            <a href="catalog.html?category=vinyl" class="category-card">
+                <div class="category-title">Кварцвинил</div>
+                <div class="category-price">от 2 590 ₽/м²</div>
+            </a>
+            <a href="catalog.html?category=engineered" class="category-card">
+                <div class="category-title">Инженерная доска</div>
+                <div class="category-price">от 5 900 ₽/м²</div>
+            </a>
+            <a href="catalog.html?category=parquet" class="category-card">
+                <div class="category-title">Паркетная доска</div>
+                <div class="category-price">от 4 200 ₽/м²</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Hits -->
+<section class="hits">
+    <div class="container">
+        <h2 class="section-title">Хиты продаж</h2>
+        <p class="section-subtitle">Самые популярные коллекции этого сезона</p>
+        <div class="products-grid" id="popularGrid"></div>
+    </div>
+</section>
+
+<!-- Calculator -->
+<section class="calculator">
+    <div class="container">
+        <div class="calculator-grid">
+            <div>
+                <h2 class="section-title" style="text-align: left; color: white;">Калькулятор стоимости</h2>
+                <p style="margin-bottom: 24px;">Рассчитайте точную стоимость за 30 секунд</p>
+                <div class="calculator-form">
+                    <input type="number" id="length" placeholder="Длина комнаты (м)" value="5" step="0.1">
+                    <input type="number" id="width" placeholder="Ширина комнаты (м)" value="4" step="0.1">
+                    <select id="coatingType">
+                        <option value="1490">Ламинат 32 класс — 1 490 ₽/м²</option>
+                        <option value="1890">Ламинат 33 класс — 1 890 ₽/м²</option>
+                        <option value="2590">Кварцвинил — 2 590 ₽/м²</option>
+                    </select>
+                    <button class="btn-primary" onclick="calcTotal()" style="width: 100%;">Рассчитать</button>
+                </div>
+            </div>
+            <div class="calculator-result">
+                <div> Площадь</div>
+                <div class="result-price" id="areaResult">20 м²</div>
+                <div> Стоимость материала</div>
+                <div class="result-price" id="materialResult">29 800 ₽</div>
+                <div> С запасом 10%</div>
+                <div class="result-price" id="totalResult">32 780 ₽</div>
+                <button class="btn-outline" onclick="addCalcToCart()"> Добавить в корзину</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery">
+    <div class="container">
+        <h2 class="section-title">Наши работы</h2>
+        <p class="section-subtitle">Реальные проекты наших клиентов</p>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://s3.stroi-news.ru/img/svetlii-linoleum-v-interere-dizain-krasivo-59.jpg" alt="Гостиная"></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/736x/4c/23/b4/4c23b451e540e3b481d0897c372e26c6.jpg" alt="Кухня"></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/originals/85/d2/7a/85d27a398cfa6d4e09f8b7466b1a52c0.jpg" alt="Коридор"></div>
+            <div class="gallery-item"><img src="https://ir.ozone.ru/s3/multimedia-1-w/w1200/7177475984.jpg" alt="Ванная"></div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+    <div class="container">
+        <h2 class="section-title">Часто задаваемые вопросы</h2>
+        <p class="section-subtitle">Ответы на популярные вопросы</p>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <div class="faq-question">Какой ламинат лучше для кухни? <span>+</span></div>
+                <div class="faq-answer">Для кухни лучше выбирать влагостойкий ламинат 33 класса или кварцвинил — они не боятся воды и механических повреждений.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Сколько стоит доставка? <span>+</span></div>
+                <div class="faq-answer">Доставка по Москве — 500 ₽, по области — 800 ₽. При заказе от 50 000 ₽ — бесплатно.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Как ухаживать за ламинатом? <span>+</span></div>
+                <div class="faq-answer">Протирайте пылесосом или слегка влажной тряпкой. Избегайте обильного количества воды и абразивных средств.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><h4 style="color: white;">ИП Коваленко Анна Леонидовна</h4><p>ИНН 123456789012<br>ОГРНИП 315123456789012</p></div>
+            <div><h4 style="color: white;">Контакты</h4><p> +7 (495) 123-45-67<br> hello@place-floor.ru<br> Москва, ул. Строителей, 10</p></div>
+            <div><h4 style="color: white;">Режим работы</h4><p>Пн-Пт: 10:00–20:00<br>Сб-Вс: 11:00–18:00</p></div>
+        </div>
+        <div style="text-align: center; padding-top: 30px; border-top: 1px solid #333;">© 2026 PLACE — премиальные напольные покрытия</div>
+    </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script>
+    function renderPopular() {
+        const popular = (typeof products !== 'undefined' ? products.filter(p => p.hit).slice(0, 4) : []);
+        const container = document.getElementById('popularGrid');
+        if (!container) return;
+        container.innerHTML = popular.map(p => `
+            <div class="product-card">
+                <div class="product-image"><img src="${p.image}"><div class="product-badge"> Хит</div></div>
+                <div class="product-info">
+                    <div class="product-title">${p.name}</div>
+                    <div class="product-price">${p.price.toLocaleString()} ₽ <old>${p.oldPrice ? p.oldPrice.toLocaleString() + ' ₽' : ''}</old></div>
+                    <div class="product-actions"><button class="add-to-cart" onclick="addToCart(${p.id})">В корзину</button></div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function calcTotal() {
+        const length = parseFloat(document.getElementById('length').value) || 0;
+        const width = parseFloat(document.getElementById('width').value) || 0;
+        const price = parseFloat(document.getElementById('coatingType').value);
+        const area = length * width;
+        const material = area * price;
+        const total = material * 1.1;
+        document.getElementById('areaResult').innerHTML = area.toFixed(2) + ' м²';
+        document.getElementById('materialResult').innerHTML = Math.round(material).toLocaleString() + ' ₽';
+        document.getElementById('totalResult').innerHTML = Math.round(total).toLocaleString() + ' ₽';
+    }
+
+    function addCalcToCart() {
+        const total = document.getElementById('totalResult').innerText;
+        alert(`✅ Расчёт на сумму ${total} добавлен в корзину. Оформите заказ в корзине.`);
+    }
+
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.parentElement.classList.toggle('open');
+        });
+    });
+
+    renderPopular();
+    calcTotal();
+</script>
+</body>
+</html>

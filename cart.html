@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина | PLACE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .cart-table { width: 100%; background: white; border-radius: 24px; border-collapse: collapse; overflow: hidden; }
+        .cart-table th, .cart-table td { padding: 16px; text-align: left; border-bottom: 1px solid #eee; }
+        .cart-table th { background: #f5f2ef; }
+        .cart-summary { background: white; border-radius: 24px; padding: 24px; margin-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+        .checkout-form { background: white; border-radius: 24px; padding: 24px; margin-top: 24px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 16px; }
+        .empty-cart { text-align: center; padding: 60px; background: white; border-radius: 24px; }
+        .quantity-input { width: 60px; padding: 6px; text-align: center; border: 1px solid #ddd; border-radius: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo"><a href="index.html"><h1>PLACE</h1><p>Коваленко Анна Леонидовна</p></a></div>
+            <div class="nav">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="wishlist.html">Избранное</a>
+                <a href="comparison.html">Сравнение</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            <div class="actions">
+                <a href="wishlist.html" class="action-btn">❤️ <span class="badge" id="wishlistBadge">0</span></a>
+                <a href="comparison.html" class="action-btn">🔄 <span class="badge" id="compareBadge">0</span></a>
+                <a href="cart.html" class="action-btn">🛒 <span class="badge" id="cartBadge">0</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <h1 class="section-title">🛒 Корзина</h1>
+    <div id="cartContent"></div>
+</main>
+
+<footer class="footer">...</footer>
+
+<script src="js/data.js"></script>
+<script>
+    function renderCart() {
+        const container = document.getElementById("cartContent");
+        let cart = JSON.parse(localStorage.getItem("place_cart")) || [];
+        
+        if (cart.length === 0) {
+            container.innerHTML = `<div class="empty-cart">🛒 Корзина пуста<br><br><a href="catalog.html" class="btn-primary">Перейти в каталог</a></div>`;
+            return;
+        }
+        
+        let total = 0;
+        let html = `<table class="cart-table"><thead><tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr></thead><tbody>`;
+        
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            html += `<tr>
+                <td><img src="${item.image}" style="width:60px; height:60px; object-fit:cover; border-radius:12px;"> ${item.name}</td>
+                <td>${item.price.toLocaleString()} ₽</td>
+                <td><input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQty(${item.id}, this.value)"></td>
+                <td>${itemTotal.toLocaleString()} ₽</td>
+                <td><button onclick="removeItem(${item.id})" style="background:none; border:none; font-size:1.2rem;">🗑️</button></td>
+            </tr>`;
+        });
+        
+        html += `</tbody></table>
+        <div class="cart-summary">
+            <div class="cart-total">Итого: ${total.toLocaleString()} ₽</div>
+            <button class="btn-primary" onclick="showCheckout()">Оформить заказ</button>
+        </div>`;
+        
+        container.innerHTML = html;
+        window.cartTotal = total;
+    }
+    
+    function updateQty(id, qty) {
+        let cart = JSON.parse(localStorage.getItem("place_cart")) || [];
+        const item = cart.find(i => i.id === id);
+        if (item) item.quantity = parseInt(qty);
+        localStorage.setItem("place_cart", JSON.stringify(cart));
+        renderCart();
+        updateBadges();
+    }
+    
+    function removeItem(id) {
+        let cart = JSON.parse(localStorage.getItem("place_cart")) || [];
+        cart = cart.filter(i => i.id !== id);
+        localStorage.setItem("place_cart", JSON.stringify(cart));
+        renderCart();
+        updateBadges();
+        showToast("Товар удалён");
+    }
+    
+    function showCheckout() {
+        const container = document.getElementById("cartContent");
+        container.innerHTML += `
+            <div class="checkout-form" id="checkoutForm">
+                <h3>📝 Оформление заказа</h3>
+                <div class="form-row">
+                    <div class="form-group"><label>Имя</label><input type="text" id="orderName"></div>
+                    <div class="form-group"><label>Телефон</label><input type="tel" id="orderPhone"></div>
+                </div>
+                <div class="form-group"><label>Адрес</label><input type="text" id="orderAddress"></div>
+                <div class="form-group"><label>Комментарий</label><textarea id="orderComment" rows="2"></textarea></div>
+                <button class="btn-primary" onclick="submitOrder()">✅ Подтвердить заказ</button>
+            </div>
+        `;
+    }
+    
+    function submitOrder() {
+        const name = document.getElementById("orderName").value;
+        const phone = document.getElementById("orderPhone").value;
+        const address = document.getElementById("orderAddress").value;
+        if (!name || !phone || !address) { alert("Заполните все поля"); return; }
+        
+        const cart = JSON.parse(localStorage.getItem("place_cart")) || [];
+        const order = { id: Date.now(), date: new Date().toLocaleString(), customer: { name, phone, address }, items: cart, total: window.cartTotal, status: "🟡 Новый" };
+        
+        let orders = JSON.parse(localStorage.getItem("place_orders")) || [];
+        orders.unshift(order);
+        localStorage.setItem("place_orders", JSON.stringify(orders));
+        localStorage.setItem("place_cart", JSON.stringify([]));
+        
+        alert(`✅ Заказ №${order.id} оформлен!\nСумма: ${order.total.toLocaleString()} ₽`);
+        window.location.href = "index.html";
+    }
+    
+    renderCart();
+</script>
+</body>
+</html>

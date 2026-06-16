@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | PLACE — Напольные покрытия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contacts-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 40px; 
+            margin: 40px 0; 
+        }
+        .contact-card { 
+            background: white; 
+            border-radius: 28px; 
+            padding: 32px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .contact-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+            padding: 16px 0; 
+            border-bottom: 1px solid #eee; 
+        }
+        .requisites { 
+            background: white; 
+            border-radius: 28px; 
+            padding: 32px; 
+            margin-top: 30px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        @media (max-width: 768px) { 
+            .contacts-grid { 
+                grid-template-columns: 1fr; 
+            } 
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>PLACE</h1>
+                    <p>Коваленко Анна Леонидовна</p>
+                </a>
+            </div>
+            <div class="nav">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="wishlist.html">Избранное</a>
+                <a href="comparison.html">Сравнение</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            <div class="actions">
+                <a href="wishlist.html" class="action-btn">❤️ <span class="badge" id="wishlistBadge">0</span></a>
+                <a href="comparison.html" class="action-btn">🔄 <span class="badge" id="compareBadge">0</span></a>
+                <a href="cart.html" class="action-btn">🛒 <span class="badge" id="cartBadge">0</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <h1 class="section-title">Контакты</h1>
+    
+    <div class="contacts-grid">
+        <div class="contact-card">
+            <h2 style="margin-bottom: 24px;">Свяжитесь с нами</h2>
+            <div class="contact-item">
+                <div><strong>Телефон</strong><br>+7 (495) 123-45-67</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>WhatsApp / Telegram</strong><br>+7 (900) 123-45-67</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>Email</strong><br>hello@place-floor.ru</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>Адрес</strong><br>г. Москва, ул. Строителей, 10</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>Режим работы</strong><br>Пн-Пт: 10:00–20:00<br>Сб-Вс: 11:00–18:00</div>
+            </div>
+        </div>
+        <div class="contact-card">
+            <h2 style="margin-bottom: 24px;">Реквизиты</h2>
+            <div class="contact-item">
+                <div><strong>ИП Коваленко Анна Леонидовна</strong></div>
+            </div>
+            <div class="contact-item">
+                <div><strong>ИНН</strong><br>123456789012</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>ОГРНИП</strong><br>315123456789012</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>Расчётный счёт</strong><br>40802810123456789012</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>Банк</strong><br>ПАО Сбербанк г. Москва</div>
+            </div>
+            <div class="contact-item">
+                <div><strong>БИК</strong><br>044525225</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="requisites">
+        <h3 style="margin-bottom: 16px;">Схема проезда</h3>
+        <p>м. Строителей, выход №3, 5 минут пешком</p>
+        <p>Бесплатная парковка для клиентов</p>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4 style="color:white;">ИП Коваленко Анна Леонидовна</h4>
+                <p>ИНН 123456789012<br>ОГРНИП 315123456789012</p>
+            </div>
+            <div>
+                <h4 style="color:white;">Контакты</h4>
+                <p>+7 (495) 123-45-67<br>hello@place-floor.ru<br>г. Москва, ул. Строителей, 10</p>
+            </div>
+            <div>
+                <h4 style="color:white;">Режим работы</h4>
+                <p>Пн-Пт: 10:00–20:00<br>Сб-Вс: 11:00–18:00</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #3d322c;">
+            © 2026 PLACE — премиальные напольные покрытия
+        </div>
+    </div>
+</footer>
+
+<script src="js/data.js"></script>
+</body>
+</html>

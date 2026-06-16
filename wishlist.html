@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избранное | PLACE — Напольные покрытия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .wishlist-header {
+            background: linear-gradient(135deg, #2c2522 0%, #4a3b34 100%);
+            color: white;
+            padding: 60px 0;
+            border-radius: 0 0 48px 48px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .wishlist-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+        .wishlist-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        .empty-wishlist {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 32px;
+        }
+        .empty-wishlist h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: #2c2522;
+        }
+        .empty-wishlist p {
+            color: #7a6e68;
+            margin-bottom: 32px;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+        .product-image {
+            height: 240px;
+            position: relative;
+            overflow: hidden;
+            background: #f0edea;
+        }
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #1e1b1a;
+        }
+        .product-category {
+            font-size: 0.7rem;
+            color: #c47a44;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .product-rating {
+            color: #f5b342;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #c47a44;
+            margin: 12px 0;
+        }
+        .product-price old {
+            font-size: 0.85rem;
+            color: #aaa;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .btn-add-cart {
+            flex: 2;
+            background: #2c2522;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+        .btn-add-cart:hover {
+            background: #c47a44;
+        }
+        .btn-remove {
+            background: #f0edea;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: #dc2626;
+            font-weight: 500;
+        }
+        .btn-remove:hover {
+            background: #dc2626;
+            color: white;
+        }
+        .clear-wishlist {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+        .btn-clear {
+            background: transparent;
+            border: 1px solid #dc2626;
+            color: #dc2626;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .btn-clear:hover {
+            background: #dc2626;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>PLACE</h1>
+                    <p>Коваленко Анна Леонидовна</p>
+                </a>
+            </div>
+            <div class="nav">
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="wishlist.html">Избранное</a>
+                <a href="comparison.html">Сравнение</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            <div class="actions">
+                <a href="wishlist.html" class="action-btn">❤️ <span class="badge" id="wishlistBadge">0</span></a>
+                <a href="comparison.html" class="action-btn">🔄 <span class="badge" id="compareBadge">0</span></a>
+                <a href="cart.html" class="action-btn">🛒 <span class="badge" id="cartBadge">0</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="wishlist-header">
+    <div class="container">
+        <h1> Избранное</h1>
+        <p>Товары, которые вам понравились</p>
+    </div>
+</section>
+
+<main class="container">
+    <div id="wishlistContainer"></div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><h4 style="color:white;">ИП Коваленко Анна Леонидовна</h4><p>ИНН 123456789012<br>ОГРНИП 315123456789012</p></div>
+            <div><h4 style="color:white;">Контакты</h4><p> +7 (495) 123-45-67<br> hello@place-floor.ru</p></div>
+            <div><h4 style="color:white;">Режим работы</h4><p>Пн-Пт: 10:00–20:00<br>Сб-Вс: 11:00–18:00</p></div>
+        </div>
+        <div style="text-align: center; margin-top: 40px;">© 2026 PLACE — премиальные напольные покрытия</div>
+    </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script>
+    function renderWishlist() {
+        const container = document.getElementById("wishlistContainer");
+        const wishlist = JSON.parse(localStorage.getItem("place_wishlist")) || [];
+        
+        if (wishlist.length === 0) {
+            container.innerHTML = `
+                <div class="empty-wishlist">
+                    <div style="font-size: 4rem; margin-bottom: 16px;"> </div>
+                    <h3>Избранное пусто</h3>
+                    <p>Добавляйте товары в избранное, чтобы не потерять понравившиеся варианты</p>
+                    <a href="catalog.html" class="btn-primary">Перейти в каталог</a>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = `
+            <div class="clear-wishlist">
+                <button class="btn-clear" onclick="clearAllWishlist()">🗑️ Очистить всё избранное</button>
+            </div>
+            <div class="products-grid">
+                ${wishlist.map(p => `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="${p.image}" class="product-img" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=300&h=200&fit=crop'">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">${p.type || p.category}</div>
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-rating">⭐ ${p.rating} ★ (${p.reviews} отзывов)</div>
+                            <div class="product-price">
+                                ${p.price.toLocaleString()} ₽/м²
+                                ${p.oldPrice ? `<old>${p.oldPrice.toLocaleString()} ₽</old>` : ''}
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart" onclick="addToCart(${p.id})">🛒 В корзину</button>
+                                <button class="btn-remove" onclick="removeFromWishlist(${p.id})">❤️ Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+    
+    function removeFromWishlist(productId) {
+        let wishlist = JSON.parse(localStorage.getItem("place_wishlist")) || [];
+        wishlist = wishlist.filter(p => p.id !== productId);
+        localStorage.setItem("place_wishlist", JSON.stringify(wishlist));
+        renderWishlist();
+        updateBadges();
+        showToast("🗑️ Товар удалён из избранного");
+    }
+    
+    function clearAllWishlist() {
+        if (confirm("Вы уверены, что хотите удалить все товары из избранного?")) {
+            localStorage.setItem("place_wishlist", JSON.stringify([]));
+            renderWishlist();
+            updateBadges();
+            showToast("✅ Избранное очищено");
+        }
+    }
+    
+    function showToast(msg, type = "success") {
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.innerText = msg;
+        toast.style.background = type === "success" ? "#2c2522" : "#dc2626";
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
+    }
+    
+    renderWishlist();
+</script>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | PLACE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f2f4;
+            color: #1e1b1a;
+        }
+
+        /* Админ хедер */
+        .admin-header {
+            background: #1a1a2e;
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .admin-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .admin-logo p {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Статистика */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-title {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #c47a44;
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+            color: #2c5e2e;
+            margin-top: 8px;
+        }
+
+        /* Фильтры и поиск */
+        .filters-bar {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            font-family: inherit;
+        }
+
+        .search-box button {
+            background: #c47a44;
+            border: none;
+            padding: 0 24px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .status-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-filter-btn {
+            background: #f1f2f4;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .status-filter-btn.active {
+            background: #c47a44;
+            color: white;
+        }
+
+        /* Таблица заказов */
+        .orders-table-container {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .orders-table th {
+            text-align: left;
+            padding: 18px 16px;
+            background: #f8f6f4;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+        }
+
+        .orders-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f0edea;
+            vertical-align: middle;
+        }
+
+        .orders-table tr:hover {
+            background: #fef5ed;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-new {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-processing {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .status-delivered {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .status-select {
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .order-items-details {
+            max-width: 300px;
+        }
+
+        .order-items-details summary {
+            cursor: pointer;
+            color: #c47a44;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .order-items-list {
+            margin-top: 8px;
+            padding-left: 16px;
+            font-size: 0.8rem;
+        }
+
+        .order-items-list div {
+            padding: 4px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        /* Пустое состояние */
+        .empty-orders {
+            text-align: center;
+            padding: 60px;
+            color: #7a6e68;
+        }
+
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .orders-table {
+                font-size: 0.8rem;
+            }
+            .orders-table th, .orders-table td {
+                padding: 10px 8px;
+            }
+            .filters-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        /* Анимация */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Форма входа */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 32px;
+            padding: 48px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            color: #7a6e68;
+            margin-bottom: 32px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 48px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .login-card button {
+            width: 100%;
+            background: #c47a44;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 48px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .demo-password {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div id="adminPanel" style="display: none;">
+    <!-- Админ хедер -->
+    <div class="admin-header">
+        <div class="container">
+            <div class="admin-logo">
+                <h1>🔐 Админ-панель PLACE</h1>
+                <p>Управление заказами ИП Коваленко Анна Леонидовна</p>
+            </div>
+            <div class="admin-user">
+                <span>👋 Привет, Admin</span>
+                <button class="logout-btn" onclick="logout()">Выйти</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Статистика -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">📦 Всего заказов</div>
+                <div class="stat-number" id="totalOrders">0</div>
+                <div class="stat-change">за всё время</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">💰 Выручка</div>
+                <div class="stat-number" id="totalRevenue">0 ₽</div>
+                <div class="stat-change">сумма всех заказов</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">🟡 Новых заказов</div>
+                <div class="stat-number" id="newOrders">0</div>
+                <div class="stat-change">ожидают обработки</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">📊 Средний чек</div>
+                <div class="stat-number" id="avgOrder">0 ₽</div>
+                <div class="stat-change">средняя сумма заказа</div>
+            </div>
+        </div>
+
+        <!-- Фильтры -->
+        <div class="filters-bar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск по номеру заказа, имени или телефону...">
+                <button onclick="filterOrders()">Поиск</button>
+            </div>
+            <div class="status-filter" id="statusFilter">
+                <button class="status-filter-btn active" data-status="all">Все</button>
+                <button class="status-filter-btn" data-status="🟡 Новый">🟡 Новые</button>
+                <button class="status-filter-btn" data-status="🟠 В обработке">🟠 В обработке</button>
+                <button class="status-filter-btn" data-status="🟢 Доставлен">🟢 Доставленные</button>
+                <button class="status-filter-btn" data-status="🔴 Отменён">🔴 Отменённые</button>
+            </div>
+        </div>
+
+        <!-- Таблица заказов -->
+        <div class="orders-table-container">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>№ заказа</th>
+                        <th>Дата</th>
+                        <th>Клиент</th>
+                        <th>Контакты</th>
+                        <th>Товары</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <tr>
+                        <td colspan="7" class="empty-orders">Загрузка заказов...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Форма входа -->
+<div id="loginForm" class="login-container">
+    <div class="login-card">
+        <h2>🔐 Вход в админ-панель</h2>
+        <p>Введите пароль для доступа к управлению заказами</p>
+        <input type="password" id="adminPassword" placeholder="Пароль">
+        <button onclick="checkLogin()">Войти</button>
+        <div class="demo-password">Демо-пароль: <strong>admin123</strong></div>
+    </div>
+</div>
+
+<script>
+    let allOrders = [];
+    let currentStatusFilter = "all";
+    let currentSearchTerm = "";
+
+    // Проверка входа
+    function checkLogin() {
+        const pwd = document.getElementById("adminPassword").value;
+        if (pwd === "admin123") {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("adminPanel").style.display = "block";
+            loadOrders();
+        } else {
+            alert("❌ Неверный пароль!");
+        }
+    }
+
+    // Загрузка заказов из localStorage
+    function loadOrders() {
+        const savedOrders = localStorage.getItem("place_orders");
+        allOrders = savedOrders ? JSON.parse(savedOrders) : [];
+        filterOrders();
+    }
+
+    // Фильтрация заказов
+    function filterOrders() {
+        let filtered = [...allOrders];
+        
+        // Фильтр по статусу
+        if (currentStatusFilter !== "all") {
+            filtered = filtered.filter(order => order.status === currentStatusFilter);
+        }
+        
+        // Поиск по номеру, имени, телефону
+        if (currentSearchTerm) {
+            const term = currentSearchTerm.toLowerCase();
+            filtered = filtered.filter(order => 
+                order.id.toString().includes(term) ||
+                order.customer?.name?.toLowerCase().includes(term) ||
+                order.customer?.phone?.includes(term)
+            );
+        }
+        
+        renderOrdersTable(filtered);
+        updateStats(filtered);
+    }
+
+    // Отрисовка таблицы
+    function renderOrdersTable(orders) {
+        const tbody = document.getElementById("ordersTableBody");
+        
+        if (orders.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="empty-orders">📭 Заказов не найдено</td></tr>`;
+            return;
+        }
+        
+        tbody.innerHTML = orders.map(order => `
+            <tr class="fade-in">
+                <td><strong>#${order.id}</strong></td>
+                <td>${order.date || "—"}</td>
+                <td>${order.customer?.name || "—"}</td>
+                <td>
+                    ${order.customer?.phone || "—"}<br>
+                    <small>${order.customer?.address || "—"}</small>
+                </td>
+                <td class="order-items-details">
+                    <details>
+                        <summary>${order.items?.length || 0} товаров</summary>
+                        <div class="order-items-list">
+                            ${order.items?.map(item => `
+                                <div>${item.name} x ${item.quantity} = ${(item.price * item.quantity).toLocaleString()} ₽</div>
+                            `).join('') || 'Нет товаров'}
+                        </div>
+                    </details>
+                </td>
+                <td><strong>${(order.total || 0).toLocaleString()} ₽</strong></td>
+                <td>
+                    <select class="status-select" onchange="updateOrderStatus(${order.id}, this.value)">
+                        <option value="🟡 Новый" ${order.status === "🟡 Новый" ? "selected" : ""}>🟡 Новый</option>
+                        <option value="🟠 В обработке" ${order.status === "🟠 В обработке" ? "selected" : ""}>🟠 В обработке</option>
+                        <option value="🟢 Доставлен" ${order.status === "🟢 Доставлен" ? "selected" : ""}>🟢 Доставлен</option>
+                        <option value="🔴 Отменён" ${order.status === "🔴 Отменён" ? "selected" : ""}>🔴 Отменён</option>
+                    </select>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // Обновление статистики
+    function updateStats(orders) {
+        const total = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+        const avg = orders.length > 0 ? total / orders.length : 0;
+        
+        document.getElementById("totalOrders").innerText = orders.length;
+        document.getElementById("totalRevenue").innerText = total.toLocaleString() + " ₽";
+        document.getElementById("newOrders").innerText = orders.filter(o => o.status === "🟡 Новый").length;
+        document.getElementById("avgOrder").innerText = Math.round(avg).toLocaleString() + " ₽";
+    }
+
+    // Обновление статуса заказа
+    function updateOrderStatus(orderId, newStatus) {
+        let orders = JSON.parse(localStorage.getItem("place_orders")) || [];
+        orders = orders.map(o => o.id == orderId ? { ...o, status: newStatus } : o);
+        localStorage.setItem("place_orders", JSON.stringify(orders));
+        loadOrders();
+        showNotification(`Статус заказа #${orderId} изменён на "${newStatus}"`);
+    }
+
+    // Уведомление
+    function showNotification(msg) {
+        const notification = document.createElement("div");
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2c2522;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 48px;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        `;
+        notification.innerText = msg;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 2500);
+    }
+
+    // Настройка фильтров
+    document.querySelectorAll(".status-filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".status-filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentStatusFilter = btn.dataset.status;
+            filterOrders();
+        });
+    });
+
+    // Поиск
+    function filterOrders() {
+        currentSearchTerm = document.getElementById("searchInput").value;
+        let filtered = [...allOrders];
+        
+        if (currentStatusFilter !== "all") {
+            filtered = filtered.filter(order => order.status === currentStatusFilter);
+        }
+        
+        if (currentSearchTerm) {
+            const term = currentSearchTerm.toLowerCase();
+            filtered = filtered.filter(order => 
+                order.id.toString().includes(term) ||
+                order.customer?.name?.toLowerCase().includes(term) ||
+                order.customer?.phone?.includes(term)
+            );
+        }
+        
+        renderOrdersTable(filtered);
+        updateStats(filtered);
+    }
+
+    function logout() {
+        document.getElementById("loginForm").style.display = "flex";
+        document.getElementById("adminPanel").style.display = "none";
+        document.getElementById("adminPassword").value = "";
+    }
+
+    window.updateOrderStatus = updateOrderStatus;
+    window.filterOrders = filterOrders;
+    window.checkLogin = checkLogin;
+    window.logout = logout;
+</script>
+</body>
+</html>
